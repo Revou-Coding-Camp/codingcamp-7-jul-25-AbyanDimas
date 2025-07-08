@@ -134,6 +134,17 @@ Bagian "Konfigurasi Database (Demo)" disertakan untuk mendemonstrasikan bagaiman
 
 **Tutorial**: Terdapat tutorial pseudo-code yang menjelaskan langkah-langkah untuk menyiapkan database (misalnya PostgreSQL) dan bagaimana backend seharusnya menangani koneksi database yang aman.
 
+## Database Configuration Simulation Flow
+
+```mermaid
+flowchart TD
+    A[User Opens DB Config Panel] --> B[Display Mock Form]
+    B --> C{User Interacts}
+    C -->|Input Fake Credentials| D[Show Security Warning]
+    C -->|Click 'Simulate'| E[Display Pseudo-Code]
+    E --> F[Explain Backend Concept]
+```
+
 ## Responsivitas
 Aplikasi ini dirancang agar sepenuhnya responsif, memastikan pengalaman pengguna yang optimal di berbagai perangkat:
 
