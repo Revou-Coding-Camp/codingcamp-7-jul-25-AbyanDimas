@@ -110,6 +110,21 @@ Aplikasi ini menggunakan Gemini API untuk memberikan saran tugas berdasarkan inp
 
 **Peringatan**: API Key Gemini saat ini hardcoded di `script.js` untuk tujuan demo (`GEMINI_API_KEY`). Ini tidak direkomendasikan untuk aplikasi produksi karena dapat mengekspos kunci API Anda. Dalam aplikasi nyata, permintaan API ke Gemini harus melalui server backend untuk keamanan.
 
+## Gemini API Integration Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant GeminiAPI
+    
+    User->>Browser: 1. Ketik tugas + klik "AI Suggest"
+    Browser->>GeminiAPI: 2. POST request (API key di script.js)
+    Note right of GeminiAPI: https://generativelanguage.googleapis.com
+    GeminiAPI-->>Browser: 3. Response JSON (saran tugas)
+    Browser->>User: 4. Tampilkan saran di modal
+```
+
 ## Simulasi Konfigurasi Database
 Bagian "Konfigurasi Database (Demo)" disertakan untuk mendemonstrasikan bagaimana antarmuka untuk pengaturan database dapat terlihat.
 
