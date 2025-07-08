@@ -110,8 +110,6 @@ Aplikasi ini menggunakan Gemini API untuk memberikan saran tugas berdasarkan inp
 
 **Peringatan**: API Key Gemini saat ini hardcoded di `script.js` untuk tujuan demo (`GEMINI_API_KEY`). Ini tidak direkomendasikan untuk aplikasi produksi karena dapat mengekspos kunci API Anda. Dalam aplikasi nyata, permintaan API ke Gemini harus melalui server backend untuk keamanan.
 
-## Gemini API Integration Flow
-
 ```mermaid
 sequenceDiagram
     participant User
@@ -134,8 +132,6 @@ Bagian "Konfigurasi Database (Demo)" disertakan untuk mendemonstrasikan bagaiman
 
 **Tutorial**: Terdapat tutorial pseudo-code yang menjelaskan langkah-langkah untuk menyiapkan database (misalnya PostgreSQL) dan bagaimana backend seharusnya menangani koneksi database yang aman.
 
-## Database Configuration Simulation Flow
-
 ```mermaid
 flowchart TD
     A[User Opens DB Config Panel] --> B[Display Mock Form]
@@ -155,3 +151,15 @@ Aplikasi ini dirancang agar sepenuhnya responsif, memastikan pengalaman pengguna
 ## Pengelolaan Data
 Tugas dan riwayat tugas disimpan secara lokal di browser menggunakan Local Storage.
 
+```mermaid
+flowchart TD
+    A[User Action] --> B{Action Type}
+    B -->|Add Task| C[Save to localStorage]
+    B -->|Complete Task| D[Update Status]
+    B -->|Delete Task| E[Move to History]
+    C --> F[Render List]
+    D --> F
+    E --> G[Update History]
+    G --> F
+    F --> H[Display Updated UI]
+```
