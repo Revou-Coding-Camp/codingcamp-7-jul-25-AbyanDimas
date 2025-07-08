@@ -68,6 +68,15 @@ Untuk menjalankan aplikasi ini secara lokal:
 
 Atau Anda bisa langsung mengakses [Live Demo](https://revou-coding-camp.github.io/codingcamp-7-jul-25-AbyanDimas/) tanpa perlu instalasi.
 
+# Workflow & Deployment Schema
+
+```mermaid
+graph TD
+    A[Local Development] -->|Commit & Push| B[GitHub Repository]
+    B -->|Automatic| C[GitHub Pages Deployment]
+    C --> D[Live Website]
+```
+
 ## Struktur Proyek
 ```
 codingcamp-7-jul-25-AbyanDimas/
@@ -120,9 +129,3 @@ Aplikasi ini dirancang agar sepenuhnya responsif, memastikan pengalaman pengguna
 ## Pengelolaan Data
 Tugas dan riwayat tugas disimpan secara lokal di browser menggunakan Local Storage.
 
-- `localStorage.getItem('tasks')`: Memuat tugas aktif.
-- `localStorage.setItem('tasks', JSON.stringify(tasks))`: Menyimpan tugas aktif.
-- `localStorage.getItem('deletedTasks')`: Memuat tugas yang dihapus (riwayat).
-- `localStorage.setItem('deletedTasks', JSON.stringify(deletedTasks))`: Menyimpan tugas yang dihapus.
-
-Ini berarti data Anda akan tetap ada bahkan setelah menutup browser, tetapi tidak akan disinkronkan di seluruh perangkat atau browser yang berbeda.
