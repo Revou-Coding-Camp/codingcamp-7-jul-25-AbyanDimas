@@ -1,0 +1,533 @@
+/* Mengimpor font Inter dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Aturan dasar untuk body */
+body {
+    font-family: 'Inter', sans-serif; /* Menggunakan font Inter */
+    background-color: #1a202c; /* Warna latar belakang gelap */
+    color: #e2e8f0; /* Warna teks terang */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Memastikan body mengisi seluruh tinggi viewport */
+    margin: 0;
+    padding: 1rem; /* Padding di sekitar konten */
+}
+
+/* Gaya untuk kontainer utama aplikasi todo */
+.todo-container {
+    background-color: rgba(45, 55, 72, 0.85); /* Warna latar belakang sedikit transparan */
+    backdrop-filter: blur(15px); /* Efek blur untuk glassmorphism */
+    border-radius: 1.5rem; /* Sudut membulat lebih besar */
+    padding: 2rem; /* Padding di dalam kontainer */
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3), 0 8px 15px -5px rgba(0, 0, 0, 0.15); /* Bayangan lebih dalam */
+    width: 100%;
+    max-width: 48rem; /* Lebar maksimum kontainer */
+    border: 1px solid rgba(74, 85, 104, 0.5); /* Border tipis dan sedikit transparan */
+}
+
+/* Gaya untuk judul h1 */
+h1 {
+    color: #ffffff; /* Warna teks putih untuk judul */
+    margin-bottom: 1.5rem; /* Margin bawah */
+}
+
+/* Gaya untuk input teks dan tanggal */
+input[type="text"],
+input[type="date"],
+.db-config-section input[type="text"], /* Tambahkan ini */
+.db-config-section input[type="password"] { /* Tambahkan ini */
+    background-color: rgba(74, 85, 104, 0.7); /* Warna latar belakang input transparan */
+    backdrop-filter: blur(8px); /* Efek blur untuk input */
+    color: #e2e8f0; /* Warna teks input */
+    border: 1px solid rgba(107, 114, 128, 0.5); /* Border input transparan */
+    padding: 0.75rem; /* Padding input */
+    border-radius: 0.75rem; /* Sudut membulat input lebih besar */
+    transition: all 0.2s ease-in-out; /* Transisi halus */
+}
+
+input[type="text"]::placeholder,
+.db-config-section input::placeholder { /* Tambahkan ini */
+    color: #a0aec0; /* Warna placeholder */
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+.db-config-section input:focus { /* Tambahkan ini */
+    outline: none;
+    border-color: #4299e1; /* Warna border saat fokus */
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* Bayangan saat fokus */
+}
+
+/* Gaya untuk tombol */
+button {
+    padding: 0.75rem 1.25rem; /* Padding tombol */
+    border-radius: 0.75rem; /* Sudut membulat tombol lebih besar */
+    font-weight: 600; /* Tebal font */
+    transition: all 0.2s ease-in-out; /* Transisi halus */
+    cursor: pointer; /* Kursor pointer */
+}
+
+/* Gaya spesifik untuk tombol tambah */
+#addTaskBtn {
+    background-color: #3182ce; /* Warna latar belakang biru */
+    color: white;
+}
+
+#addTaskBtn:hover {
+    background-color: #2b6cb0; /* Warna biru lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Gaya spesifik untuk tombol AI Suggest */
+#aiSuggestBtn {
+    background-color: #48bb78; /* Warna latar belakang hijau */
+    color: white;
+}
+
+#aiSuggestBtn:hover {
+    background-color: #38a169; /* Warna hijau lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Gaya spesifik untuk tombol pencarian */
+#searchBtn {
+    background-color: #4a5568; /* Warna latar belakang abu-abu */
+    color: white;
+}
+
+#searchBtn:hover {
+    background-color: #2d3748; /* Warna abu-abu lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Gaya spesifik untuk tombol filter */
+#filterBtn {
+    background-color: #4a5568; /* Warna latar belakang abu-abu */
+    color: white;
+}
+
+#filterBtn:hover {
+    background-color: #2d3748; /* Warna abu-abu lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Gaya spesifik untuk tombol riwayat */
+#historyBtn {
+    background-color: #805ad5; /* Warna latar belakang ungu */
+    color: white;
+}
+
+#historyBtn:hover {
+    background-color: #6b46c1; /* Warna ungu lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Gaya spesifik untuk tombol hapus semua */
+#deleteAllBtn {
+    background-color: #e53e3e; /* Warna latar belakang merah */
+    color: white;
+}
+
+#deleteAllBtn:hover {
+    background-color: #c53030; /* Warna merah lebih gelap saat hover */
+    transform: scale(1.05); /* Sedikit membesar saat hover */
+}
+
+/* Gaya untuk bagian daftar tugas */
+.task-list-section {
+    background-color: rgba(45, 55, 72, 0.8); /* Warna latar belakang transparan */
+    backdrop-filter: blur(10px); /* Efek blur untuk bagian daftar */
+    border: 1px solid rgba(74, 85, 104, 0.5); /* Border transparan */
+    border-radius: 1rem; /* Sudut membulat lebih besar */
+    padding: 1rem; /* Padding */
+}
+
+/* Gaya untuk header tabel tugas */
+.table-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 0.7fr 0.8fr; /* Kolom untuk tugas, tanggal, status, aksi */
+    gap: 1rem;
+    color: #a0aec0; /* Warna teks abu-abu */
+    font-weight: 600; /* Tebal font */
+    margin-bottom: 0.75rem; /* Margin bawah */
+    padding-bottom: 0.5rem; /* Padding bawah */
+    border-bottom: 1px solid #4a5568; /* Border bawah */
+}
+
+/* Gaya untuk setiap item tugas */
+.task-item {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 0.7fr 0.8fr; /* Kolom yang sama dengan header */
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 0; /* Padding vertikal */
+    border-bottom: 1px solid #4a5568; /* Border bawah untuk setiap item */
+}
+
+.task-item:last-child {
+    border-bottom: none; /* Hapus border bawah untuk item terakhir */
+}
+
+.task-item .task-text {
+    word-break: break-word; /* Memastikan teks panjang pecah baris */
+}
+
+/* Gaya untuk tombol aksi di setiap tugas */
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center; /* Pusatkan tombol aksi */
+}
+
+.task-actions button {
+    padding: 0.5rem 0.75rem; /* Padding tombol aksi */
+    font-size: 0.875rem; /* Ukuran font lebih kecil */
+    border-radius: 0.375rem; /* Sudut membulat lebih kecil */
+}
+
+.task-actions .complete-btn {
+    background-color: #48bb78; /* Warna hijau */
+    color: white;
+}
+
+.task-actions .complete-btn:hover {
+    background-color: #38a169; /* Warna hijau lebih gelap saat hover */
+}
+
+.task-actions .delete-btn {
+    background-color: #e53e3e; /* Warna merah */
+    color: white;
+}
+
+.task-actions .delete-btn:hover {
+    background-color: #c53030; /* Warna merah lebih gelap saat hover */
+}
+
+.task-actions .restore-btn {
+    background-color: #4299e1; /* Warna biru */
+    color: white;
+}
+
+.task-actions .restore-btn:hover {
+    background-color: #3182ce; /* Warna biru lebih gelap saat hover */
+}
+
+.task-actions .permanent-delete-btn {
+    background-color: #c53030; /* Warna merah lebih gelap */
+    color: white;
+}
+
+.task-actions .permanent-delete-btn:hover {
+    background-color: #9b2c2c; /* Warna merah sangat gelap saat hover */
+}
+
+
+/* Gaya untuk tugas yang sudah selesai */
+.task-item.completed .task-text {
+    text-decoration: line-through; /* Garis coret */
+    color: #a0aec0; /* Warna teks abu-abu */
+}
+
+/* Gaya untuk pesan "Tidak ada tugas ditemukan" */
+#noTaskMessage {
+    text-align: center;
+    padding: 1rem 0;
+    color: #a0aec0;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 640px) {
+    .input-section,
+    .search-section,
+    .controls-section,
+    .db-config-section .grid { /* Tambahkan ini untuk bagian DB config */
+        flex-direction: column; /* Ubah tata letak input menjadi kolom */
+    }
+
+    .table-header,
+    .task-item {
+        grid-template-columns: 1fr; /* Ubah tata letak tabel menjadi satu kolom */
+        text-align: center; /* Pusatkan teks */
+    }
+
+    .task-item > div {
+        margin-bottom: 0.5rem; /* Margin bawah untuk setiap div di item tugas */
+    }
+
+    .task-actions {
+        justify-content: center; /* Pusatkan tombol aksi */
+    }
+
+    /* Sembunyikan teks pada tombol di layar kecil */
+    #aiSuggestBtn .ml-2,
+    #searchBtn .ml-2 {
+        display: none;
+    }
+    /* Biarkan teks terlihat untuk tombol utama yang diperkecil */
+    #filterBtn .ml-2,
+    #historyBtn .ml-2,
+    #deleteAllBtn .ml-2,
+    #toggleShortcutsBtn .ml-2,
+    #toggleDbConfigBtn .ml-2 {
+        font-size: 0.75rem; /* Ukuran font lebih kecil untuk mobile */
+        margin-left: 0.5rem;
+    }
+
+    .db-config-section .col-span-1.sm\:col-span-2 { /* Perbaiki tata letak di mobile */
+        grid-column: auto;
+    }
+
+    /* Penyesuaian padding pada modal untuk layar kecil */
+    #customModal .bg-gray-800,
+    #filterModal .bg-gray-800,
+    #historyModal .bg-gray-800,
+    #shortcutsModal .bg-gray-800 {
+        padding: 1.5rem; /* Kurangi padding modal di mobile */
+    }
+}
+
+/* Gaya untuk modal kustom (pesan) */
+#customModal {
+    transition: opacity 0.2s ease-in-out;
+    z-index: 60; /* Tingkatkan z-index agar selalu di atas modal lain */
+}
+
+#customModal .bg-gray-800 {
+    background-color: rgba(45, 55, 72, 0.9); /* Transparan untuk efek glass */
+    backdrop-filter: blur(12px); /* Blur untuk glassmorphism */
+    border: 1px solid rgba(74, 85, 104, 0.6); /* Border transparan */
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+#customModal.active {
+    display: flex;
+    opacity: 1;
+}
+
+#customModal.active .bg-gray-800 {
+    transform: scale(1);
+}
+
+/* Gaya untuk modal filter */
+#filterModal {
+    transition: opacity 0.2s ease-in-out;
+    z-index: 50; /* Pastikan z-index lebih rendah dari customModal */
+}
+
+#filterModal .bg-gray-800 {
+    background-color: rgba(45, 55, 72, 0.9); /* Transparan untuk efek glass */
+    backdrop-filter: blur(12px); /* Blur untuk glassmorphism */
+    border: 1px solid rgba(74, 85, 104, 0.6); /* Border transparan */
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+#filterModal.active {
+    display: flex;
+    opacity: 1;
+}
+
+#filterModal.active .bg-gray-800 {
+    transform: scale(1);
+}
+
+/* Gaya untuk modal riwayat */
+#historyModal {
+    transition: opacity 0.2s ease-in-out;
+    z-index: 50; /* Pastikan z-index lebih rendah dari customModal */
+}
+
+#historyModal .bg-gray-800 {
+    background-color: rgba(45, 55, 72, 0.9); /* Transparan untuk efek glass */
+    backdrop-filter: blur(12px); /* Blur untuk glassmorphism */
+    border: 1px solid rgba(74, 85, 104, 0.6); /* Border transparan */
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+#historyModal.active {
+    display: flex;
+    opacity: 1;
+}
+
+#historyModal.active .bg-gray-800 {
+    transform: scale(1);
+}
+
+/* Gaya untuk modal pintasan keyboard - BARU */
+#shortcutsModal {
+    transition: opacity 0.2s ease-in-out;
+    z-index: 50; /* Pastikan z-index lebih rendah dari customModal */
+}
+
+#shortcutsModal .bg-gray-800 {
+    background-color: rgba(45, 55, 72, 0.9); /* Transparan untuk efek glass */
+    backdrop-filter: blur(12px); /* Blur untuk glassmorphism */
+    border: 1px solid rgba(74, 85, 104, 0.6); /* Border transparan */
+    transform: scale(0.95);
+    transition: transform 0.2s ease-in-out;
+}
+
+#shortcutsModal.active {
+    display: flex;
+    opacity: 1;
+}
+
+#shortcutsModal.active .bg-gray-800 {
+    transform: scale(1);
+}
+
+
+/* Menyesuaikan jarak antar baris tabel untuk responsivitas */
+@media (min-width: 641px) {
+    .task-item {
+        padding: 0.75rem 0; /* Jarak vertikal antar item tugas */
+    }
+}
+
+/* Penyesuaian jarak antar kolom di tabel */
+.table-header,
+.task-item {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/* Gaya untuk bagian daftar riwayat */
+.history-list-section {
+    max-height: 20rem; /* Batasi tinggi untuk scroll */
+    overflow-y: auto; /* Aktifkan scroll vertikal */
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 0.8fr; /* Kolom untuk tugas, tanggal, aksi */
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #4a5568;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item .history-text {
+    word-break: break-word;
+}
+
+.history-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.history-actions button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+}
+
+/* New Keyframe Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(10px); }
+}
+
+.task-item.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.task-item.fade-out {
+    animation: fadeOut 0.3s ease-in forwards;
+}
+
+.history-item.fade-out {
+    animation: fadeOut 0.3s ease-in forwards;
+}
+
+/* Modal specific animations */
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes modalFadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.9); }
+}
+
+/* Apply animations to modal containers */
+#customModal.active .bg-gray-800,
+#filterModal.active .bg-gray-800,
+#historyModal.active .bg-gray-800,
+#shortcutsModal.active .bg-gray-800 { /* Tambahkan #shortcutsModal di sini */
+    animation: modalFadeIn 0.3s ease-out forwards;
+}
+
+#customModal.modal-closing .bg-gray-800,
+#filterModal.modal-closing .bg-gray-800,
+#historyModal.modal-closing .bg-gray-800,
+#shortcutsModal.modal-closing .bg-gray-800 { /* Tambahkan #shortcutsModal di sini */
+    animation: modalFadeOut 0.3s ease-in forwards;
+}
+
+/* Gaya untuk bagian pintasan keyboard */
+.shortcuts-section,
+.db-config-section { /* Tambahkan ini */
+    background-color: rgba(45, 55, 72, 0.8); /* Warna latar belakang transparan */
+    backdrop-filter: blur(10px); /* Efek blur untuk glassmorphism */
+    border: 1px solid rgba(74, 85, 104, 0.5); /* Border transparan */
+    border-radius: 1rem; /* Sudut membulat lebih besar */
+}
+
+.shortcut-key {
+    background-color: rgba(107, 114, 128, 0.7); /* Warna latar belakang abu-abu transparan */
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Gaya spesifik untuk tombol Hubungkan Database */
+#connectDbBtn {
+    background-color: #2563eb; /* Warna biru yang lebih kuat */
+    color: white;
+}
+
+#connectDbBtn:hover {
+    background-color: #1d4ed8; /* Warna biru lebih gelap saat hover */
+}
+
+/* Warna untuk status tugas */
+.task-status-completed {
+    color: #48bb78; /* Hijau */
+    font-weight: 600;
+}
+
+.task-status-pending {
+    color: #f6ad55; /* Oranye */
+    font-weight: 600;
+}
+
+/* Warna untuk tanggal jatuh tempo */
+.due-date-imminent {
+    color: #ecc94b; /* Kuning/Oranye */
+    font-weight: 600;
+}
+
+.due-date-overdue {
+    color: #e53e3e; /* Merah */
+    font-weight: 600;
+}
+
+.due-date-normal {
+    color: #e2e8f0; /* Warna teks normal */
+}

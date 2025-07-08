@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Tugas</title>
+    <!-- Memuat Tailwind CSS untuk utilitas dasar -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Memuat font Inter dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Menghubungkan file CSS kustom -->
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body class="bg-gray-900 text-white font-inter flex items-center justify-center min-h-screen p-4">
+    <div class="todo-container bg-gray-800 p-8 rounded-3xl shadow-2xl w-full max-w-2xl border border-gray-700">
+        <h1 class="text-3xl font-bold text-center mb-6 text-white">Daftar Tugas</h1>
+
+        <!-- Bagian input tugas baru -->
+        <div class="input-section flex flex-col sm:flex-row gap-4 mb-6">
+            <input type="text" id="taskInput" placeholder="Tambahkan tugas baru..."
+                class="flex-grow p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600">
+            <input type="date" id="dateInput"
+                class="p-3 rounded-xl bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600">
+            <button id="aiSuggestBtn"
+                class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 flex items-center justify-center">
+                <i class="fas fa-lightbulb"></i> <span class="ml-2 hidden sm:inline">AI</span>
+            </button>
+            <button id="addTaskBtn"
+                class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- Bagian pencarian tugas -->
+        <div class="search-section flex flex-col sm:flex-row gap-4 mb-6">
+            <input type="text" id="searchInput" placeholder="Cari tugas..."
+                class="flex-grow p-3 rounded-xl bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 border border-gray-600">
+            <button id="searchBtn"
+                class="bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 flex items-center justify-center">
+                <i class="fas fa-search"></i> <span class="ml-2 hidden sm:inline">Cari</span>
+            </button>
+        </div>
+
+        <!-- Bagian kontrol filter, riwayat, dan hapus semua -->
+        <div class="controls-section flex flex-col sm:flex-row justify-between gap-4 mb-6">
+            <button id="filterBtn"
+                class="bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 flex items-center justify-center">
+                <i class="fas fa-filter"></i> <span class="ml-2 text-sm">FILTER</span> <!-- Diperkecil -->
+            </button>
+            <button id="historyBtn"
+                class="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 flex items-center justify-center">
+                <i class="fas fa-history"></i> <span class="ml-2 text-sm">RIWAYAT</span> <!-- Diperkecil -->
+            </button>
+            <button id="deleteAllBtn"
+                class="bg-red-600 hover:bg-red-700 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center justify-center">
+                <i class="fas fa-trash-alt"></i> <span class="ml-2 text-sm">HAPUS</span> <!-- Diperkecil -->
+            </button>
+            <!-- Tombol baru untuk menampilkan/menyembunyikan Pintasan Keyboard -->
+            <button id="toggleShortcutsBtn"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex items-center justify-center">
+                <i class="fas fa-keyboard"></i> <span class="ml-2 text-sm">PINTASAN</span> <!-- Diperkecil -->
+            </button>
+            <!-- Tombol untuk menampilkan/menyembunyikan Konfigurasi Database -->
+            <button id="toggleDbConfigBtn"
+                class="bg-blue-800 hover:bg-blue-700 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center">
+                <i class="fas fa-cog"></i> <span class="ml-2 text-sm">Config</span> <!-- Diperkecil -->
+            </button>
+        </div>
+
+        <!-- Bagian daftar tugas -->
+        <div class="task-list-section bg-gray-700 p-4 rounded-2xl border border-gray-600">
+            <div
+                class="table-header grid grid-cols-4 gap-4 text-gray-400 font-semibold mb-3 pb-2 border-b border-gray-600">
+                <div class="col-span-1">TUGAS</div>
+                <div class="col-span-1">TANGGAL JATUH TEMPO</div>
+                <div class="col-span-1">STATUS</div>
+                <div class="col-span-1 text-center">AKSI</div>
+            </div>
+            <div id="taskList" class="text-gray-300">
+                <!-- Tugas akan dimasukkan di sini oleh JavaScript -->
+                <p id="noTaskMessage" class="text-center py-4 text-gray-400">Tidak ada tugas ditemukan</p>
+            </div>
+        </div>
+
+        <!-- Bagian Konfigurasi Database (Hanya untuk Demo) - Sekarang dapat diaktifkan/dinonaktifkan -->
+        <div id="dbConfigSectionWrapper" class="hidden">
+            <div class="db-config-section bg-gray-700 p-4 mt-6 rounded-2xl border border-gray-600">
+                <h3 class="text-xl font-bold mb-3 text-white flex items-center">
+                    <i class="fas fa-database mr-2"></i> Konfigurasi Database (Demo)
+                </h3>
+                <p class="text-sm text-red-400 mb-4">
+                    Peringatan: Jangan gunakan ini di lingkungan produksi. Kredensial akan terekspos di frontend.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="dbHost" class="block text-gray-400 text-sm font-bold mb-2">Host Database:</label>
+                        <input type="text" id="dbHost" placeholder="contoh: localhost / endpoint-rds"
+                            class="w-full p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-500">
+                    </div>
+                    <div>
+                        <label for="dbPort" class="block text-gray-400 text-sm font-bold mb-2">Port Database:</label>
+                        <input type="text" id="dbPort" placeholder="contoh: 5432 (PostgreSQL) / 3306 (MySQL)"
+                            class="w-full p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-500">
+                    </div>
+                    <div>
+                        <label for="dbUser" class="block text-gray-400 text-sm font-bold mb-2">Username Database:</label>
+                        <input type="text" id="dbUser" placeholder="contoh: admin"
+                            class="w-full p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-500">
+                    </div>
+                    <div>
+                        <label for="dbPassword" class="block text-gray-400 text-sm font-bold mb-2">Password Database:</label>
+                        <input type="password" id="dbPassword" placeholder="password database"
+                            class="w-full p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-500">
+                    </div>
+                    <div class="col-span-1 sm:col-span-2">
+                        <label for="dbName" class="block text-gray-400 text-sm font-bold mb-2">Nama Database:</label>
+                        <input type="text" id="dbName" placeholder="nama database"
+                            class="w-full p-2 rounded-lg bg-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-500">
+                    </div>
+                </div>
+                <button id="connectDbBtn"
+                    class="bg-blue-700 hover:bg-blue-800 text-white p-3 rounded-xl font-semibold transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full flex items-center justify-center">
+                    <i class="fas fa-link mr-2"></i> Hubungkan ke Database
+                </button>
+                <div id="dbStatus" class="mt-4 text-center text-sm font-semibold">
+                    <!-- Status koneksi akan ditampilkan di sini -->
+                </div>
+
+                <!-- Tutorial Konfigurasi Database -->
+                <div class="mt-8 pt-4 border-t border-gray-600">
+                    <h4 class="text-lg font-bold mb-3 text-white">Tutorial Koneksi Database (Contoh PostgreSQL)</h4>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Bagian ini menunjukkan contoh dasar cara menghubungkan aplikasi ke database, seperti PostgreSQL di Amazon RDS.
+                        Perhatikan bahwa ini adalah contoh <strong>sisi klien (frontend)</strong> dan <strong>tidak aman</strong> untuk kredensial produksi.
+                    </p>
+
+                    <h5 class="font-semibold text-gray-200 mb-2">Langkah 1: Siapkan Database Anda</h5>
+                    <p class="text-sm text-gray-300 mb-2">
+                        Pastikan Anda memiliki instance database (misalnya, PostgreSQL di AWS RDS) yang berjalan dan dapat diakses.
+                        Catat detail koneksi: Host (Endpoint RDS), Port (biasanya 5432 untuk PostgreSQL), Username, dan Password.
+                    </p>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Anda mungkin perlu mengkonfigurasi Grup Keamanan (Security Group) di AWS untuk mengizinkan koneksi masuk dari IP publik Anda atau dari aplikasi Anda.
+                    </p>
+
+                    <h5 class="font-semibold text-gray-200 mb-2">Langkah 2: Buat Database dan Tabel</h5>
+                    <p class="text-sm text-gray-300 mb-2">
+                        Gunakan klien database (seperti DBeaver, pgAdmin, atau psql) untuk terhubung ke database Anda dan buat database baru serta tabel untuk tugas.
+                    </p>
+                    <pre class="bg-gray-900 text-green-400 p-3 rounded-md text-xs overflow-x-auto mb-4"><code>-- SQL untuk membuat database baru (jika belum ada)
+CREATE DATABASE todo_app_db;
+
+-- SQL untuk membuat tabel tugas
+CREATE TABLE tasks (
+    id VARCHAR(255) PRIMARY KEY,
+    text TEXT NOT NULL,
+    due_date DATE,
+    completed BOOLEAN DEFAULT FALSE
+);
+
+-- SQL untuk membuat tabel riwayat tugas yang dihapus
+CREATE TABLE deleted_tasks (
+    id VARCHAR(255) PRIMARY KEY,
+    text TEXT NOT NULL,
+    due_date DATE,
+    completed BOOLEAN
+);</code></pre>
+
+                    <h5 class="font-semibold text-gray-200 mb-2">Langkah 3: Integrasi Backend (Direkomendasikan)</h5>
+                    <p class="text-sm text-gray-300 mb-2">
+                        Dalam aplikasi dunia nyata, Anda akan memiliki server backend (misalnya, Node.js dengan Express, Python dengan Flask/Django) yang menangani koneksi database. Frontend Anda akan berkomunikasi dengan backend melalui API.
+                    </p>
+                    <pre class="bg-gray-900 text-blue-400 p-3 rounded-md text-xs overflow-x-auto mb-4"><code>// Contoh pseudo-code Node.js (backend) untuk menambahkan tugas
+const express = require('express');
+const { Pool } = require('pg'); // Untuk PostgreSQL
+
+const app = express();
+app.use(express.json());
+
+const pool = new Pool({
+    user: 'db_user',
+    host: 'db_host',
+    database: 'todo_app_db',
+    password: 'db_password',
+    port: 5432,
+});
+
+app.post('/tasks', async (req, res) => {
+    const { id, text, dueDate, completed } = req.body;
+    try {
+        const result = await pool.query(
+            'INSERT INTO tasks (id, text, due_date, completed) VALUES ($1, $2, $3, $4) RETURNING *',
+            [id, text, dueDate, completed]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
+app.listen(3000, () => console.log('Backend running on port 3000'));
+</code></pre>
+                    <p class="text-sm text-gray-300 mb-4">
+                        Kemudian, di frontend Anda, Anda akan memanggil endpoint backend ini (misalnya, <code>fetch('/tasks', ...)</code>) alih-alih mencoba terhubung langsung ke database.
+                    </p>
+
+                    <h5 class="font-semibold text-gray-200 mb-2">Langkah 4: Menggunakan Formulir Demo Ini</h5>
+                    <p class="text-sm text-gray-300 mb-2">
+                        Formulir di atas adalah untuk tujuan demonstrasi saja. Anda dapat memasukkan kredensial database Anda di sini, dan JavaScript akan mencoba "menghubungkan" (simulasi) dan menampilkan status.
+                    </p>
+                    <p class="text-sm text-gray-300">
+                        <strong>Ingat:</strong> Jangan pernah menyimpan kredensial database sensitif di kode frontend yang dapat diakses publik!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal kustom untuk pesan konfirmasi/informasi -->
+    <div id="customModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-xl max-w-md w-full border border-gray-700">
+            <h3 id="modalTitle" class="text-xl font-bold mb-4"></h3>
+            <p id="modalMessage" class="mb-6"></p>
+            <div class="flex justify-end gap-3">
+                <button id="modalCancelBtn" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded-lg">Batal</button>
+                <button id="modalConfirmBtn" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal baru untuk opsi filter -->
+    <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-xl max-w-sm w-full border border-gray-700">
+            <h3 class="text-xl font-bold mb-4 text-white">Pilih Filter</h3>
+            <div class="flex flex-col gap-3">
+                <button class="filter-option-btn bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-lg font-semibold transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500" data-filter="all">Semua Tugas</button>
+                <button class="filter-option-btn bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-lg font-semibold transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500" data-filter="completed">Tugas Selesai</button>
+                <button class="filter-option-btn bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-lg font-semibold transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500" data-filter="pending">Tugas Pending</button>
+            </div>
+            <div class="flex justify-end mt-6">
+                <button id="closeFilterModalBtn" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded-lg">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal baru untuk riwayat tugas yang dihapus -->
+    <div id="historyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-xl max-w-2xl w-full border border-gray-700">
+            <h3 class="text-xl font-bold mb-4 text-white">Riwayat Tugas Dihapus</h3>
+            <div class="history-list-section bg-gray-700 p-4 rounded-xl border border-gray-600 max-h-96 overflow-y-auto">
+                <div
+                    class="table-header grid grid-cols-3 gap-4 text-gray-400 font-semibold mb-3 pb-2 border-b border-gray-600">
+                    <div class="col-span-1">TUGAS</div>
+                    <div class="col-span-1">TANGGAL JATUH TEMPO</div>
+                    <div class="col-span-1 text-center">AKSI</div>
+                </div>
+                <div id="historyList" class="text-gray-300">
+                    <p id="noHistoryMessage" class="text-center py-4 text-gray-400">Tidak ada riwayat tugas.</p>
+                </div>
+            </div>
+            <div class="flex justify-end mt-6">
+                <button id="closeHistoryModalBtn" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded-lg">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal baru untuk pintasan keyboard -->
+    <div id="shortcutsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-xl max-w-xl w-full border border-gray-700"> <!-- max-w-xl untuk lebar lebih besar -->
+            <h3 class="text-xl font-bold mb-4 text-white flex items-center">
+                <i class="fas fa-keyboard mr-2"></i> Pintasan Keyboard
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-300 text-sm"> <!-- Ukuran font lebih kecil -->
+                <div class="flex items-center">
+                    <span class="shortcut-key">Enter</span> <span class="ml-2">- Tambah Tugas</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Esc</span> <span class="ml-2">- Tutup Modal/Overlay</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + F</span> <span class="ml-2">- Buka Filter</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + H</span> <span class="ml-2">- Buka Riwayat</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + A</span> <span class="ml-2">- Saran AI</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + S</span> <span class="ml-2">- Fokus Pencarian</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + D</span> <span class="ml-2">- Hapus Semua Tugas</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + N</span> <span class="ml-2">- Tugas Baru</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + L</span> <span class="ml-2">- Muat Ulang Tugas</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + J</span> <span class="ml-2">- Tampilkan/Sembunyikan Pintasan</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="shortcut-key">Ctrl/Cmd + K</span> <span class="ml-2">- Tampilkan/Sembunyikan DB Config</span>
+                </div>
+            </div>
+            <div class="flex justify-end mt-6">
+                <button id="closeShortcutsModalBtn" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded-lg">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menghubungkan file JavaScript -->
+    <script src="JS/script.js"></script>
+</body>
+
+</html>
