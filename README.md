@@ -1,11 +1,18 @@
-Here's the complete `README.md` file based on your content:
-
-```markdown
 # Aplikasi Web To-Do List
 
 Tugas dari RevoU: To-Do List Web Application
 
 Aplikasi web To-Do List ini adalah alat yang intuitif dan responsif untuk mengelola tugas harian Anda. Dibangun dengan HTML, CSS (menggunakan Tailwind CSS), dan JavaScript murni, aplikasi ini menawarkan fitur-fitur penting seperti penambahan, pengelolaan, pencarian, pemfilteran, dan riwayat tugas, serta integrasi AI dasar dan simulasi konfigurasi database.
+
+## Preview
+
+![Preview](https://raw.githubusercontent.com/Revou-Coding-Camp/codingcamp-7-jul-25-AbyanDimas/main/assets/preview.png)
+
+## Demo
+🌐 [Live Demo](https://revou-coding-camp.github.io/codingcamp-7-jul-25-AbyanDimas/)
+
+## Repository
+📦 [GitHub Repository](https://github.com/Revou-Coding-Camp/codingcamp-7-jul-25-AbyanDimas)
 
 ## Daftar Isi
 - [Fitur](#fitur)
@@ -49,24 +56,27 @@ Aplikasi web To-Do List ini adalah alat yang intuitif dan responsif untuk mengel
 ## Instalasi dan Penggunaan
 Untuk menjalankan aplikasi ini secara lokal:
 
-1. Kloning repositori (jika ada) atau unduh file `index.html`, `style.css`, dan `script.js`.
-2. Pastikan struktur file sebagai berikut:
+1. Clone repository:
+   ```bash
+   git clone https://github.com/Revou-Coding-Camp/codingcamp-7-jul-25-AbyanDimas.git
    ```
-   .
-   ├── index.html
-   ├── CSS/
-   │   └── style.css
-   └── JS/
-       └── script.js
+2. Navigasi ke folder proyek:
+   ```bash
+   cd codingcamp-7-jul-25-AbyanDimas
    ```
 3. Buka file `index.html` di browser web pilihan Anda.
 
-Tidak ada dependensi server yang diperlukan karena aplikasi ini sepenuhnya berjalan di sisi klien (frontend).
+Atau Anda bisa langsung mengakses [Live Demo](https://revou-coding-camp.github.io/codingcamp-7-jul-25-AbyanDimas/) tanpa perlu instalasi.
 
 ## Struktur Proyek
-- `index.html`: File HTML utama yang mendefinisikan struktur halaman.
-- `CSS/style.css`: File CSS kustom yang berisi gaya tambahan dan penyesuaian.
-- `JS/script.js`: File JavaScript yang berisi semua logika aplikasi.
+```
+codingcamp-7-jul-25-AbyanDimas/
+├── index.html
+├── CSS/
+│   └── style.css
+└── JS/
+    └── script.js
+```
 
 ## Pintasan Keyboard
 Aplikasi ini mendukung pintasan keyboard untuk meningkatkan efisiensi:
@@ -105,6 +115,7 @@ Aplikasi ini dirancang agar sepenuhnya responsif, memastikan pengalaman pengguna
 
 - **Desktop**: Tata letak dua kolom untuk input dan kontrol.
 - **Tablet & Mobile**: Tata letak satu kolom yang disederhanakan, tombol yang disesuaikan, dan ukuran font yang dioptimalkan.
+- **Glassmorphism**: Efek visual yang konsisten di seluruh breakpoint.
 
 ## Pengelolaan Data
 Tugas dan riwayat tugas disimpan secara lokal di browser menggunakan Local Storage.
